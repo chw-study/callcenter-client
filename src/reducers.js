@@ -1,29 +1,14 @@
-import {LOAD_RECORDS} from './actions';
+import {LOAD_RECORDS, UPDATE_RECORD, REMOVE_RECORD} from './actions';
+import _ from 'lodash';
 
-const initialRecords = [
-  {
-    _id: 'foo',
-    timestamp: Date.now(),
-    phone: 123,
-    worker: 'John Harris',
-    workerId: 'bar',
-    called: false,
-    attempts: [Date.now()]
-  },
-  {
-    _id: 'baz',
-    timestamp: Date.now(),
-    phone: 123,
-    worker: 'Maniv Horsikens',
-    workerId: 'baz',
-    called: false
-  }
-]
+import {OrderedMap} from 'immutable';
 
-function records(state = initialRecords, action) {
+function records(state = OrderedMap(), action) {
   switch (action.type) {
+  case REMOVE_RECORD:
+    return state.remove(action.id)
   case LOAD_RECORDS:
-    return action.records;
+    return OrderedMap(action.records.map(r => [r._id, r]));
   default:
     return state;
   }

@@ -15,12 +15,12 @@ class Feed extends Component {
   }
 
   _loadMore = () => {
-    store.dispatch(loadRecords(this.props.records.length))
+    store.dispatch(loadRecords(this.props.records.size))
   }
 
   render() {
     const { records } = this.props;
-    const recs = records.map((r,i) => {
+    const recs = Array.from(records.values()).map((r,i) => {
       return <li key={i}> <Record record={r} /> </li>
     });
     return (

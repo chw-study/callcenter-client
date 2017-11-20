@@ -1,0 +1,52 @@
+.feed-title {
+  text-align: center;
+  font-size: 2em;
+  font-weight: 900;
+  text-transform: uppercase;
+  margin: 1em auto;
+}
+
+.record {
+  margin: 4em auto;
+  width: 600px;
+}
+
+.attempted {
+  float: right;
+}
+
+.actions {
+  justify-content: space-betweeen;
+}
+
+.load-more {
+  margin: 2em auto;
+  display: flex;
+  justify-content: center;
+}
+
+.record .content .info {
+  margin: 1em 0 0 0;
+  display: flex;
+}
+
+.record .content h3 {
+  display: inline-block;
+  margin-right: 1em;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.record form {
+  margin-top: 1em;
+}
+
+.record form .treatment-code {
+  margin: 0.5em 0 0 0;
+  display: block;
+  width: 200px;
+}
+
+.record form .treatment-code {
+
+}

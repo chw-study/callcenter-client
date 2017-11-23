@@ -52,6 +52,7 @@ class Record extends Component {
           <div className="info"> <h3>Worker:</h3> <span> {record.worker} </span></div>
           <div className="info"> <h3>Patient Name:</h3> <span> {record.name} </span></div>
           <div className="info"> <h3>Patient Phone:</h3> <span> {record.phone} </span></div>
+          <div className="info"> <h3>Text Message:</h3> <span> {record.text} </span></div>
           <form onSubmit = {this._onSubmit}>
 
             <FormControlLabel

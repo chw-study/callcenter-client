@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@typeform/embed": "^0.4.2",
     "history": "^4.7.2",
     "immutable": "^3.8.2",
     "lodash": "^4.17.4",

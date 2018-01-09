@@ -11,13 +11,23 @@ import {submitAttempt, submitUpdate} from '../actions';
 import Switch from 'material-ui/Switch';
 import Checkbox from 'material-ui/Checkbox';
 import { FormGroup, FormControlLabel } from 'material-ui/Form';
+import {makePopup} from '@typeform/embed';
+import querystring from 'querystring';
 
 class Record extends Component {
   constructor(props) {
     super(props);
     // const {notes = '', code = ''} = this.props.record;
     // console.log(this.props.record)
-    this.state = { }
+
+    // pick form to send to (from db? lookup on client side for now?)
+    const formUrl = 'https://nandanrao.typeform.com/to/HdYFRZ'
+    const qs = querystring.stringify({
+      worker: props.record.worker,
+      visitdate: moment(props.record.timestamp['$date']).format("dddd, MMMM Do")
+    });
+    this.typeform = makePopup(`${formUrl}?${qs}`, { mode: 'drawer_left'});
+    this.state = {};
   }
 
   componentWillReceiveProps(props) {
@@ -31,7 +41,8 @@ class Record extends Component {
 
   _onSubmit = (e) => {
     e.preventDefault();
-    store.dispatch(submitUpdate(this.props.record._id, this.state));
+    this.typeform.open();
+    // store.dispatch(submitUpdate(this.props.record._id, this.state));
   }
 
   _onChange = (key, e) => {
@@ -77,6 +88,7 @@ class Record extends Component {
               margin="normal"
               />
           </form>
+
         </CardContent>
 
         <CardActions style={actionsStyles}>
@@ -90,7 +102,6 @@ class Record extends Component {
             dense
             className="attempted"
             onClick={this._onAttempted}> Attempted</Button>  }
-
         </CardActions>
       </Card>
     );

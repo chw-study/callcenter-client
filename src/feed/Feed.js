@@ -30,9 +30,9 @@ class Feed extends Component {
           {recs}
         </ul>
         <div className="load-more">
-        <Button
-          raised
-          onClick={this._loadMore}> Load More</Button>
+          <Button
+            raised
+            onClick={this._loadMore}> Load More</Button>
         </div>
       </div>
     );

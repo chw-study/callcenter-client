@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 import querystring from 'querystring';
 import {SERVER_URL} from './constants';
-
+import {store} from './store';
 export const LOAD_RECORDS = 'LOAD_RECORDS';
 export const UPDATE_RECORD = 'UPDATE_RECORD';
 export const REMOVE_RECORD = 'REMOVE_RECORD';
@@ -19,14 +19,18 @@ export function loadRecords(start) {
           records
         })
       })
+      .catch(err => {
+        console.error(err)
+      })
   }
+}
+
+export function removeRecord(_id) {
+  return { type: REMOVE_RECORD, id: _id }
 }
 
 export function submitUpdate(_id, {notes, code, called}) {
   return (dispatch, state) => {
-    if ((!!called && !code) || (!called && !!code)) {
-      return
-    }
     dispatch({ type: REMOVE_RECORD, id: _id })
     const conf = {
       method: 'PUT',
@@ -34,13 +38,11 @@ export function submitUpdate(_id, {notes, code, called}) {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({notes, code, called})
+      body: JSON.stringify({ called })
     }
     return fetch(`${SERVER_URL}/messages/${_id}`, conf)
-      .then(res => res.json())
-      .then(record => {
-        loadRecords();
-      })
+      .then(res => store.distpatch(loadRecords()))
+      .catch(err => store.dispatch(loadRecords()))
   }
 }
 
@@ -48,9 +50,7 @@ export function submitAttempt(id) {
   return (dispatch, state) => {
     dispatch({ type: REMOVE_RECORD, id: id })
     return fetch(`${SERVER_URL}/messages/${id}/attempt`, { method: 'POST'})
-      .then(res => res.json())
-      .then(records => {
-         loadRecords();
-      })
+      .then(res => store.distpatch(loadRecords()))
+      .catch(err => store.dispatch(loadRecords()))
   }
 }

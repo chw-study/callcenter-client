@@ -5,6 +5,7 @@ import {store} from './store';
 export const LOAD_RECORDS = 'LOAD_RECORDS';
 export const UPDATE_RECORD = 'UPDATE_RECORD';
 export const REMOVE_RECORD = 'REMOVE_RECORD';
+export const SERVER_ERR = 'SERVER_ERR';
 
 export function loadRecords(start) {
   return (dispatch, state) => {
@@ -20,7 +21,8 @@ export function loadRecords(start) {
         })
       })
       .catch(err => {
-        console.error(err)
+        console.error(err.message)
+        dispatch({ type: SERVER_ERR, err: err })
       })
   }
 }

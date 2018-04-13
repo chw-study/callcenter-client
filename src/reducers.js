@@ -1,4 +1,4 @@
-import {LOAD_RECORDS, UPDATE_RECORD, REMOVE_RECORD} from './actions';
+import {SERVER_ERR, LOAD_RECORDS, UPDATE_RECORD, REMOVE_RECORD} from './actions';
 import _ from 'lodash';
 
 import {OrderedMap} from 'immutable';
@@ -14,4 +14,13 @@ function records(state = OrderedMap(), action) {
   }
 }
 
-export default { records };
+function errors(state = null, action) {
+  switch (action.type) {
+  case SERVER_ERR:
+    return action.err
+  default:
+    return state
+  }
+}
+
+export default { records, errors };

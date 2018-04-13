@@ -19,6 +19,12 @@ class App extends Component {
   render() {
     const { value } = this.state;
 
+    const getTab = (val) => {
+      return value === 0 ? <Feed records={this.props.records}/> : <div className="instructions"> No instructions yet! </div>
+    }
+
+    const body = !this.props.errors ? getTab(value) : <div className="error-message"> Something went wrong. Try to reload or try again later. Sorry! <br /> <br /> <span>{this.props.errors.toString()}</span></div>
+
     return (
       <div className="app">
         <AppBar position="static">
@@ -27,8 +33,7 @@ class App extends Component {
             <Tab label="Instructions" />
           </Tabs>
         </AppBar>
-        {value === 0 && <Feed records={this.props.records}/>}
-        {value === 1 && <div className="instructions"> No instructions yet! </div>}
+        {body}
       </div>
 
     );
@@ -37,7 +42,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    records: state.records
+    ...state
   }
 };
 

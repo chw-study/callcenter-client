@@ -24,13 +24,11 @@ class App extends Component {
         <AppBar position="static">
           <Tabs value={value} onChange={this.handleChange} className="tabs" fullWidth centered>
             <Tab label="Feed" />
-            <Tab label="Attempted" />
-            <Tab label="Called" />
+            <Tab label="Instructions" />
           </Tabs>
         </AppBar>
-        {value === 0 &&<Feed records={this.props.records}/>}
-        {value === 1 && <div>Recently attempted calls (disabled) </div>}
-        {value === 2 && <div>Called records (disabled) </div>}
+        {value === 0 && <Feed records={this.props.records}/>}
+        {value === 1 && <div className="instructions"> No instructions yet! </div>}
       </div>
 
     );

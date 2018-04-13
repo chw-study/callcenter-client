@@ -83,3 +83,10 @@ table {
 html {
   font-family: 'Roboto';
 }
+
+.instructions {
+  margin: 5em auto;
+  padding: 2em;
+  font-weight: 900;
+  text-transform: uppercase;
+}

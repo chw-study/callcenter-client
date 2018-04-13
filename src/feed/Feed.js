@@ -5,13 +5,16 @@ import Button from 'material-ui/Button';
 import {loadRecords} from '../actions';
 import Record from './Record';
 import {store} from '../store';
+import { CircularProgress } from 'material-ui/Progress';
 import './Feed.css'
 
 class Feed extends Component {
 
   constructor(props) {
     super(props)
-    this._loadMore()
+    if (this.props.records.size < 1) {
+      this._loadMore()
+    }
   }
 
   _loadMore = () => {
@@ -25,15 +28,8 @@ class Feed extends Component {
     });
     return (
       <div className="feed">
-        <h2 className="feed-title"> Call Records: </h2>
-        <ul>
-          {recs}
-        </ul>
-        <div className="load-more">
-          <Button
-            raised
-            onClick={this._loadMore}> Load More</Button>
-        </div>
+        <h2 className="feed-title"> Next Patient: </h2>
+        {recs.length > 0 ? <ul> {recs} </ul> :  <div className="progress"><CircularProgress /> </div>}
       </div>
     );
   }

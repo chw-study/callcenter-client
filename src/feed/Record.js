@@ -15,18 +15,14 @@ import { FormGroup, FormControlLabel } from 'material-ui/Form';
 import {makePopup} from '@typeform/embed';
 import querystring from 'querystring';
 
-export function randomSeed(n) {
-  const i = Math.floor(Math.random() * n);
-  return ['A', 'B', 'C', 'D', 'E', 'F'][i];
-}
-
 class Record extends Component {
   constructor(props) {
     super(props);
     const {_id, code} = this.props.record;
 
+    // TODO: randomly pick a code when we have multiple!!
     // pick form to send to based on code
-    const formUrl = TYPEFORMS[code]
+    const formUrl = TYPEFORMS.default
 
     // If we did not find a url, remove the record and log an error (this is useless)
     // TODO: do something with these errors!
@@ -37,12 +33,12 @@ class Record extends Component {
 
     // These are the "hidden" fields in our Typeform
     const qs = querystring.stringify({
-      worker: props.record.worker,
+      worker: props.record.workerPhone,
       visitdate: moment(props.record.timestamp['$date']).format("dddd, MMMM Do"),
-      seed1: randomSeed(4),
-      seed2: randomSeed(3)
+      code: code.toLowerCase().trim()
     });
     this.typeform = makePopup(`${formUrl}?${qs}`, { mode: 'drawer_left'});
+    this.state = { code: code.toUpperCase() }
   }
 
   _onAttempted = () => {
@@ -56,23 +52,29 @@ class Record extends Component {
 
   _onSubmit = (e) => {
     e.preventDefault();
-    store.dispatch(submitUpdate(this.props.record._id, { called: true}));
+    store.dispatch(submitUpdate(this.props.record._id, { called: true, code: this.state.code }));
+  }
+
+  _onChange = (e) => {
+    this.setState({ code: e.target.value })
   }
 
   render() {
     const { record } = this.props;
-    const actionsStyles = { justifyContent: 'space-between'};
+    const actionsStyles = { justifyContent: 'space-between', padding: '1em 0'};
 
 
     return (
       <Card className="record">
 
         <CardContent className="content">
-          <div className="info"> <h3>Visited:</h3> <span> {moment(record.timestamp['$date']).format("dddd, MMMM Do YYYY, h:mm:ss a")} </span></div>
-          <div className="info"> <h3>Worker Phone:</h3> <span> {record.worker} </span></div>
-          <div className="info"> <h3>Patient Name:</h3> <span> {record.name} </span></div>
-          <div className="info"> <h3>Patient Phone:</h3> <span> {record.phone} </span></div>
-          <div className="info"> <h3>Service Code:</h3> <span> {record.code} </span></div>
+          <div className="info"> <h3>Visited:</h3> <span> {moment(record.timestamp['$date']).format("dddd, MMMM Do, h:mm a")} </span></div>
+          <div className="info"> <h3>Worker Phone:</h3> <span> {record.workerPhone} </span></div>
+          <div className="info"> <h3>Patient Name:</h3> <span> {record.patientName} </span></div>
+          <div className="info"> <h3>Patient Phone:</h3> <span> {record.patientPhone} </span></div>
+          <form>
+            <h3> Service Code : </h3> <TextField value={this.state.code.toUpperCase() } onChange={this._onChange } placeholder={"originally: " + record.code.toUpperCase()}/>
+          </form>
         </CardContent>
 
         <CardActions style={actionsStyles}>
@@ -81,6 +83,11 @@ class Record extends Component {
                 dense
                 className="attempted"
               onClick={this._onAttempted}> No Answer </Button>  }
+            { record.inProgress ? <CircularProgress  /> :
+              <Button raised color="accent"
+                  dense
+                  className="submit"
+                onClick={this._noConsent}> Refused to give consent </Button> }
             { record.inProgress ? <CircularProgress  /> :
               <Button raised color="primary"
                   dense

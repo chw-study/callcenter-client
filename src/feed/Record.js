@@ -73,28 +73,28 @@ class Record extends Component {
           <div className="info"> <h3>Patient Name:</h3> <span> {record.patientName} </span></div>
           <div className="info"> <h3>Patient Phone:</h3> <span> {record.patientPhone} </span></div>
           <form>
-            <h3> Service Code : </h3> <TextField value={this.state.code.toUpperCase() } onChange={this._onChange } placeholder={"originally: " + record.code.toUpperCase()}/>
+            <h3> Service Code : </h3> <TextField value={this.state.code.toUpperCase() } onChange={this._onChange } placeholder={"was " + record.code.toUpperCase()}/>
           </form>
         </CardContent>
 
         <CardActions style={actionsStyles}>
           { record.inProgress ? <CircularProgress  /> :
-            <Button raised color="accent"
+            <Button variant="raised" color="secondary"
                 dense
                 className="attempted"
               onClick={this._onAttempted}> No Answer </Button>  }
             { record.inProgress ? <CircularProgress  /> :
-              <Button raised color="accent"
+              <Button variant="raised" color="secondary"
                   dense
                   className="submit"
-                onClick={this._noConsent}> Refused to give consent </Button> }
+                onClick={this._noConsent}> No consent </Button> }
             { record.inProgress ? <CircularProgress  /> :
-              <Button raised color="primary"
+              <Button variant="raised" color="primary"
                   dense
                   className="submit"
                 onClick={this._onAnswered}> On Phone </Button> }
             { record.inProgress ? <CircularProgress  /> :
-              <Button raised
+              <Button variant="raised"
                   dense
                   className="submit"
                 onClick={this._onSubmit}> Finished </Button> }

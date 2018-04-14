@@ -60,6 +60,8 @@
 
 .record button {
   height: 4em;
+  padding: 6px;
+  min-width: 35px;
 }
 
 .progress {

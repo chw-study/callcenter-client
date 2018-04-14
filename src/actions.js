@@ -31,7 +31,7 @@ export function removeRecord(_id) {
   return { type: REMOVE_RECORD, id: _id }
 }
 
-export function submitUpdate(_id, {notes, code, called}) {
+export function submitUpdate(_id, upd) {
   return (dispatch, state) => {
     dispatch({ type: REMOVE_RECORD, id: _id })
     const conf = {
@@ -40,7 +40,7 @@ export function submitUpdate(_id, {notes, code, called}) {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ called })
+      body: JSON.stringify(upd)
     }
     return fetch(`${SERVER_URL}/messages/${_id}`, conf)
       .then(res => store.distpatch(loadRecords()))

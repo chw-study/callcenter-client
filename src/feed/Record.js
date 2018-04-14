@@ -45,6 +45,10 @@ class Record extends Component {
     store.dispatch(submitAttempt(this.props.record._id));
   }
 
+  _noConsent = () => {
+    store.dispatch(submitUpdate(this.props.record._id, { noConsent: true }))
+  }
+
   _onAnswered = (e) => {
     e.preventDefault();
     this.typeform.open();

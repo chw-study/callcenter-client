@@ -33,8 +33,9 @@ class Record extends Component {
 
     // These are the "hidden" fields in our Typeform
     const qs = querystring.stringify({
-      worker: props.record.workerPhone,
-      visitdate: moment(props.record.timestamp['$date']).format("dddd, MMMM Do"),
+      worker: props.record.workerName,
+      patient: props.record.patientName,
+      visitdate: moment(props.record.serviceDate['$date']).format("dddd, MMMM Do"),
       code: code.toLowerCase().trim()
     });
     this.typeform = makePopup(`${formUrl}?${qs}`, { mode: 'drawer_left'});
@@ -72,7 +73,7 @@ class Record extends Component {
       <Card className="record">
 
         <CardContent className="content">
-          <div className="info"> <h3>Visited:</h3> <span> {moment(record.timestamp['$date']).format("dddd, MMMM Do, h:mm a")} </span></div>
+          <div className="info"> <h3>Visited:</h3> <span> {moment(record.serviceDate['$date']).format("dddd, MMMM Do")} </span></div>
           <div className="info"> <h3>Worker Name:</h3> <span> {record.workerName} </span></div>
           <div className="info"> <h3>Patient Name:</h3> <span> {record.patientName} </span></div>
           <div className="info"> <h3>Patient Phone:</h3> <span> {record.patientPhone} </span></div>

@@ -20,7 +20,7 @@ class App extends Component {
     const { value } = this.state;
 
     const getTab = (val) => {
-      return value === 0 ? <Feed records={this.props.records}/> : <div className="instructions"> No instructions yet! </div>
+      return value === 0 ? <Feed district={this.props.district} records={this.props.records}/> : <div className="instructions"> No instructions yet! </div>
     }
 
     const body = !this.props.errors ? getTab(value) : <div className="error-message"> Something went wrong. Try to reload or try again later. Sorry! <br /> <br /> <span>{this.props.errors.toString()}</span></div>

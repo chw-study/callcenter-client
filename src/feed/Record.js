@@ -73,7 +73,7 @@ class Record extends Component {
 
         <CardContent className="content">
           <div className="info"> <h3>Visited:</h3> <span> {moment(record.timestamp['$date']).format("dddd, MMMM Do, h:mm a")} </span></div>
-          <div className="info"> <h3>Worker Phone:</h3> <span> {record.workerPhone} </span></div>
+          <div className="info"> <h3>Worker Name:</h3> <span> {record.workerName} </span></div>
           <div className="info"> <h3>Patient Name:</h3> <span> {record.patientName} </span></div>
           <div className="info"> <h3>Patient Phone:</h3> <span> {record.patientPhone} </span></div>
           <form>

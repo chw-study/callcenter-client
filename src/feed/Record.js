@@ -33,6 +33,8 @@ class Record extends Component {
 
     // These are the "hidden" fields in our Typeform
     const qs = querystring.stringify({
+      workerphone: props.record.workerPhone,
+      patientphone: props.records.patientPhone,
       worker: props.record.workerName,
       patient: props.record.patientName,
       visitdate: moment(props.record.serviceDate['$date']).format("dddd, MMMM Do"),

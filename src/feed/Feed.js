@@ -34,7 +34,7 @@ class Feed extends Component {
     const recs = Array.from(records.values()).map((r,i) => {
       return <li key={i}> <Record record={r} /> </li>
     });
-    const options = [ "Kenema", "Western Area", "Kambia", "Tonkolili", "Test" ].map(district => {
+    const options = [ "Bo", "Bombali", "Kenema", "Western Area", "Kambia", "Tonkolili", "Test" ].map(district => {
       return <option className="districtOption" key={district} value={district}>{district}</option>
     });
     return (

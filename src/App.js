@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import logo from './logo.svg';
 import './App.css';
 import Feed from './feed/Feed';
+import Instructions from './Instructions';
 import AppBar from 'material-ui/AppBar';
 
 import Tabs, {Tab} from 'material-ui/Tabs';
@@ -20,7 +21,7 @@ class App extends Component {
     const { value } = this.state;
 
     const getTab = (val) => {
-      return value === 0 ? <Feed district={this.props.district} records={this.props.records}/> : <div className="instructions"> No instructions yet! </div>
+      return value === 0 ? <Feed district={this.props.district} records={this.props.records}/> : <Instructions />
     }
 
     const body = !this.props.errors ? getTab(value) : <div className="error-message"> Something went wrong. Try to reload or try again later. Sorry! <br /> <br /> <span>{this.props.errors.toString()}</span></div>

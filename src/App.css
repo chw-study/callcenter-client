@@ -84,11 +84,22 @@ html {
   font-family: 'Roboto';
 }
 
-.instructions, .error-message {
+.error-message {
   margin: 5em auto;
   padding: 2em;
   font-weight: 900;
 }
+
+.instructions {
+  max-width: 800px;
+  margin: 0em auto;
+  padding: 2em;
+}
+
+.instructions p{
+  margin: 1em auto;
+}
+
 .error-message span {
   color: red;
   font-weight: 300;

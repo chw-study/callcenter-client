@@ -22,26 +22,17 @@ class Record extends Component {
 
     // TODO: randomly pick a code when we have multiple!!
     // pick form to send to based on code
-    const formUrl = TYPEFORMS.default
+    this.formUrl = TYPEFORMS.default
 
     // If we did not find a url, remove the record and log an error (this is useless)
     // TODO: do something with these errors!
-    if (!formUrl) {
+    if (!this.formUrl) {
       store.dispatch(removeRecord(_id))
       console.error('no valid typeform for this record with service code: ', code)
     }
 
     // These are the "hidden" fields in our Typeform
-    const qs = querystring.stringify({
-      messageid: props.record._id,
-      workerphone: props.record.workerPhone,
-      patientphone: props.record.patientPhone,
-      worker: props.record.workerName,
-      patient: props.record.patientName,
-      visitdate: moment(props.record.serviceDate['$date']).format("dddd, MMMM Do"),
-      code: code.toLowerCase().trim()
-    });
-    this.typeform = makePopup(`${formUrl}?${qs}`, { mode: 'drawer_left'});
+
     this.state = { code: code.toUpperCase() }
   }
 
@@ -55,7 +46,20 @@ class Record extends Component {
 
   _onAnswered = (e) => {
     e.preventDefault();
-    this.typeform.open();
+    const { record } = this.props;
+
+    const qs = querystring.stringify({
+      messageid: record._id,
+      workerphone: record.workerPhone,
+      patientphone: record.patientPhone,
+      worker: record.workerName,
+      patient: record.patientName,
+      visitdate: moment(record.serviceDate['$date']).format("dddd, MMMM Do"),
+      code: record.code.toLowerCase().trim()
+    });
+
+    const typeform = makePopup(`${this.formUrl}?${qs}`, { mode: 'drawer_left'});
+    typeform.open();
   }
 
   _onSubmit = (e) => {

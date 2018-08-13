@@ -10,31 +10,27 @@ import './Feed.css'
 import Select from 'material-ui/Select';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
-import {push} from 'react-router-redux';
 
 class Feed extends Component {
 
   constructor(props) {
     super(props)
-    console.log('constructor')
     if (this.props.records.size < 1) {
-      this._loadMore(this.props.district)
+      this._loadMore()
     }
   }
 
-  _loadMore = (district) => {
-    store.dispatch(loadRecords(district))
+  _loadMore = () => {
+    store.dispatch(loadRecords(this.props.records.size))
   }
 
   handleChange = name => event => {
-    const district = event.target.value
-    store.dispatch(push(`?district=${district}`))
-    this._loadMore(district)
+    store.dispatch(setDistrict(event.target.value))
+    // this.setState({ [name]: event.target.value });
   };
 
   render() {
     const { records } = this.props;
-
     const recs = Array.from(records.values()).map((r,i) => {
       return <li key={i}> <Record record={r} /> </li>
     });

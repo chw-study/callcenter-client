@@ -20,7 +20,6 @@ export class Main extends Component {
     const { value } = this.state;
 
     const district = querystring.parse(this.props.location.search)['?district'] || 'Test'
-    console.log(district)
 
     const getTab = (val) => {
       return value === 0 ? <Feed district={district} records={this.props.records}/> : <Instructions />

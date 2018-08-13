@@ -16,7 +16,6 @@ class Feed extends Component {
 
   constructor(props) {
     super(props)
-    console.log('constructor')
     if (this.props.records.size < 1) {
       this._loadMore(this.props.district)
     }

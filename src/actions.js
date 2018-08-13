@@ -25,12 +25,17 @@ export function removeRecords() {
 export function loadRecords(district) {
   return (dispatch, getState) => {
     const state = getState()
-    console.log('StATE', state)
     const qs = querystring.stringify({
       district: district
     })
     return fetch(`${SERVER_URL}/messages?${qs}`)
-      .then(res => res.json())
+      .then(res => {
+        if (res.status === 200) return res.json()
+        if (res.status === 404) {
+          return []
+        }
+        return res.text().then(t => {throw new Error(t)})
+      })
       .then(records => {
         dispatch({
           type: LOAD_RECORDS,

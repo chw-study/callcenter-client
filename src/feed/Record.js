@@ -22,7 +22,6 @@ class Record extends Component {
     if (!this.formUrl) {
       throw new Error('No Typeform URL!')
     }
-    console.log(this.props.record)
     this.state = { code: this.props.record.code.toUpperCase() }
   }
 

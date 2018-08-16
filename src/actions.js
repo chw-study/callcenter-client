@@ -9,15 +9,6 @@ export const REMOVE_RECORDS = 'REMOVE_RECORDS';
 export const SERVER_ERR = 'SERVER_ERR';
 
 
-// change this??? push to router!
-export function setDistrict(district) {
-  return (dispatch, getState) => {
-    dispatch({ type: SET_DISTRICT, district })
-    dispatch(removeRecords())
-    dispatch(loadRecords())
-  }
-}
-
 export function removeRecords() {
   return { type: REMOVE_RECORDS }
 }
@@ -25,6 +16,7 @@ export function removeRecords() {
 export function loadRecords(district) {
   return (dispatch, getState) => {
     const state = getState()
+    console.log('STATE', state)
     const qs = querystring.stringify({
       district: district
     })
@@ -59,7 +51,7 @@ export function submitEvent(id, event, record, updates) {
       },
       body: JSON.stringify({ event, record, updates })
     })
-      .then(res => store.distpatch(loadRecords()))
-      .catch(err => store.dispatch(loadRecords()))
+      .then(res => window.location.reload())
+      .catch(err => window.location.reload())
   }
 }

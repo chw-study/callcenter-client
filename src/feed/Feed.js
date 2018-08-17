@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
 
 import './Feed.css';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import {setDistrict, loadRecords} from '../actions';
 import Record from './Record';
 import {store} from '../store';
-import { CircularProgress } from 'material-ui/Progress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import './Feed.css'
-import Select from 'material-ui/Select';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
+import Select from '@material-ui/core/Select';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 import {push} from 'react-router-redux';
 
 class Feed extends Component {
 
   constructor(props) {
     super(props)
-    console.log('constructor')
     if (this.props.records.size < 1) {
       this._loadMore(this.props.district)
     }

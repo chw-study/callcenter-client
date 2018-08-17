@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-import Card, { CardActions, CardContent } from 'material-ui/Card';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import moment from 'moment';
 import './Record.css';
 import {store} from '../store';
 import { TYPEFORMS } from '../constants';
-import Input from 'material-ui/Input';
-import { CircularProgress } from 'material-ui/Progress';
 import {submitEvent} from '../actions';
-import Switch from 'material-ui/Switch';
-import Checkbox from 'material-ui/Checkbox';
-import { FormGroup, FormControlLabel } from 'material-ui/Form';
 import {makePopup} from '@typeform/embed';
 import querystring from 'querystring';
 

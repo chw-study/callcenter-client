@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Feed from './feed/Feed';
-import Tabs, {Tab} from 'material-ui/Tabs';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import Instructions from './Instructions';
-import AppBar from 'material-ui/AppBar';
+import AppBar from '@material-ui/core/AppBar';
 import querystring from 'querystring';
 
 export class Main extends Component {
@@ -20,7 +21,6 @@ export class Main extends Component {
     const { value } = this.state;
 
     const district = querystring.parse(this.props.location.search)['?district'] || 'Test'
-    console.log(district)
 
     const getTab = (val) => {
       return value === 0 ? <Feed district={district} records={this.props.records}/> : <Instructions />

@@ -8,7 +8,7 @@ import {store} from '../store';
 import { TYPEFORMS } from '../constants';
 import Input from 'material-ui/Input';
 import { CircularProgress } from 'material-ui/Progress';
-import {submitAttempt, submitUpdate, removeRecord} from '../actions';
+import {submitEvent} from '../actions';
 import Switch from 'material-ui/Switch';
 import Checkbox from 'material-ui/Checkbox';
 import { FormGroup, FormControlLabel } from 'material-ui/Form';
@@ -18,39 +18,33 @@ import querystring from 'querystring';
 class Record extends Component {
   constructor(props) {
     super(props);
-    const {_id, code} = this.props.record;
-
-    // TODO: randomly pick a code when we have multiple!!
-    // pick form to send to based on code
     this.formUrl = TYPEFORMS.default
-
-    // If we did not find a url, remove the record and log an error (this is useless)
-    // TODO: do something with these errors!
     if (!this.formUrl) {
-      store.dispatch(removeRecord(_id))
-      console.error('no valid typeform for this record with service code: ', code)
+      throw new Error('No Typeform URL!')
     }
-
-    // These are the "hidden" fields in our Typeform
-
-    this.state = { code: code.toUpperCase() }
+    this.state = { code: this.props.record.code.toUpperCase() }
   }
 
   _onAttempted = () => {
-    store.dispatch(submitAttempt(this.props.record._id));
+    store.dispatch(submitEvent(this.props.record._id, 'attempted', this.props.record))
   }
 
   _noConsent = () => {
-    store.dispatch(submitUpdate(this.props.record._id, { noConsent: true }))
+    store.dispatch(submitEvent(this.props.record._id, 'noConsent', this.props.record))
+  }
+
+  _onSubmit = (e) => {
+    e.preventDefault()
+    store.dispatch(submitEvent(this.props.record._id, 'called', this.props.record, { code: this.state.code }))
   }
 
   _onAnswered = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     const { record } = this.props;
 
     const qs = querystring.stringify({
       messageid: record._id,
-      workerphone: record.workerPhone,
+      workerphone: record.senderPhone,
       patientphone: record.patientPhone,
       worker: record.workerName,
       patient: record.patientName,
@@ -58,13 +52,8 @@ class Record extends Component {
       code: record.code.toLowerCase().trim()
     });
 
-    const typeform = makePopup(`${this.formUrl}?${qs}`, { mode: 'drawer_left'});
-    typeform.open();
-  }
-
-  _onSubmit = (e) => {
-    e.preventDefault();
-    store.dispatch(submitUpdate(this.props.record._id, { called: true, code: this.state.code }));
+    const typeform = makePopup(`${this.formUrl}?${qs}`, { mode: 'drawer_left'})
+    typeform.open()
   }
 
   _onChange = (e) => {
@@ -72,8 +61,8 @@ class Record extends Component {
   }
 
   render() {
-    const { record } = this.props;
-    const actionsStyles = { justifyContent: 'space-between', padding: '1em 0'};
+    const { record } = this.props
+    const actionsStyles = { justifyContent: 'space-between', padding: '1em 0'}
 
 
     return (

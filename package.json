@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/runtime": "^7.0.0-rc.1",
     "@typeform/embed": "^0.4.2",
     "history": "^4.7.2",
     "immutable": "^3.8.2",
@@ -23,8 +24,5 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  },
-  "devDependencies": {
-    "@babel/runtime": "^7.0.0-rc.1"
   }
 }
